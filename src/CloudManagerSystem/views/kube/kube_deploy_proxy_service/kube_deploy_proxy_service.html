@@ -1,0 +1,78 @@
+	<input type="hidden" id="Id" value="{{or .Id ""}}">
+      <div class="row">
+        <div class="col-md-12">
+    <!-- 创建资源开始 -->
+			<div class="nav-tabs-custom">
+
+				<div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title"><b>创建<code>proxy</code></b></h3>
+					</div>
+					<div class="box-body">
+					
+						<div class="form-group" style="height: 34px">
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+									<span class="input-group-addon">关联服务</span>
+									  <!--<select class="form-control select2" id="ServiceId" style="width: 100%;" tabindex="-1"></select>-->
+									  <select id="ServiceId" class="selectpicker show-tick form-control" title="请选择关联服务" data-live-search="true"></select>
+								</div>
+							</div>
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <span class="input-group-addon">命名空间</span>
+								  <input type="text" id="NamespaceName" class="form-control" disabled>
+								  <input type="hidden" id="NamespaceId" value="{{or .m.NamespaceId ""}}">
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" style="height: 34px">
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <span class="input-group-addon">部署名称</span>
+								  <input type="text" class="form-control" id="DeployName" placeholder="" value="{{or .m.DeployName ""}}">
+								</div>
+							</div>
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <span class="input-group-addon">服务名称</span>
+								  <input type="text" class="form-control" id="Name" placeholder="" value="{{or .m.Name ""}}">
+								</div>
+							</div>
+						</div>
+							
+						<div class="box box-solid">
+							<div class="box-body">
+								<div class="btn-group" id="toolbar">     
+									<input type="button" class="btn btn-info" id="addfun" value="添加">  
+									<input type="button" class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun();" value="删除">  
+								</div>
+								<table id="dataGridKubeDeployProxyService"></table>
+							</div>
+						</div>
+							
+						<div class="form-group"  style="height: 12px">
+							<div class="col-xs-12" style="color:green;padding-left: 0px;font-size:18px">
+								<label class="control-label">备注:</label>
+							</div>
+						</div>
+						<div class="form-group"  style="width:98%;">
+							<textarea type="text" class="form-control"  id="Ramark" placeholder="端口：80">{{or .m.Ramark ""}}</textarea>
+						</div>
+						
+						  <div class="form-group">
+							<button type="button" class="btn btn-primary" style="width:200px;" onclick="FormSubmit();">部署</button>
+						  </div>
+					</div>
+					  <!-- /.box-body -->
+				</div>   
+
+			</div>	
+	
+	
+    <!-- 创建资源结束 -->
+        </div>
+        <!-- /.col (RIGHT) -->
+      </div>
+</div>

@@ -1,0 +1,30 @@
+<form id="thisFormNode">
+    <input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>集群名称</label>
+                <input type="text" name="Clustername" class="form-control" placeholder="K8S" value="{{or .m.Ip ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">
+                        <input type="button" class="btn btn-info" onclick="ChoseNode();" value="选择节点">                          
+                        <input type="button" class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun()" value="删除">
+                    </div>
+                    <table id="dataGridNode"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--
+    <div class="row">
+        <div class="col-md-6">
+		<button class="btn btn-info" ><i class="fa fa-plus"></i> 选择节点</button>
+        </div>
+    </div>-->
+
+</form>
+</div>

@@ -1,0 +1,77 @@
+    <input type="hidden" name="KubeUserGroup.ClusterId" id="ClusterId" value="{{or .m.KubeUserGroup.ClusterId ""}}">
+	<input type="hidden" name="KubeUserGroup.Id" id="Id" value="{{or .m.KubeUserGroup.Id ""}}">
+	<input type="hidden" id="CreateUser" value="{{or .m.KubeUserGroup.CreateUser ""}}">
+      <div class="row">
+        <div class="col-md-12">
+    <!-- 创建资源开始 -->
+			<div class="nav-tabs-custom">
+
+				<div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title"><b>创建<code>服务</code></b></h3>
+					</div>
+					<div class="box-body">
+					
+						<div class="form-group" style="height: 34px">
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+									<span class="input-group-addon">服务名称</span>
+									<!-- /btn-group -->
+									<input type="text" class="form-control"  placeholder="" disabled>
+									<span type="button" class="input-group-addon btn btn-primary" onclick="ServiceChose();">选择</span>
+								</div>
+							</div>
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <span class="input-group-addon">类型</span>
+								  <select class="form-control" id="stype">
+									<option value="Ingress">Ingress</option>
+									<option value="Proxy">Proxy</option>
+								  </select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group" style="height: 34px">
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <span class="input-group-addon">服务端口</span>
+									  <select class="form-control">
+										<option>8080</option>
+										<option>8081</option>
+									  </select>
+								</div>
+							</div>
+							<div class="col-xs-6" style="padding-left: 0px;">
+								<div class="input-group">
+								  <!--外部端口-->
+								  <span class="input-group-addon" id="stypename">域名</span>
+								  <input type="text" id="stypevalue" name="ingressvalue" class="form-control"  placeholder="">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group"  style="height: 12px">
+							<div class="col-xs-12" style="color:green;padding-left: 0px;font-size:18px">
+								<label class="control-label">备注:</label>
+							</div>
+						</div>
+						<div class="form-group"  style="width:98%;">
+							<textarea type="text" class="form-control"  placeholder="端口：80"></textarea>
+						</div>
+						
+						  <div class="form-group">
+							<button type="button" class="btn btn-primary" style="width:200px;" onclick="FormSubmit();">部署</button>
+						  </div>
+					</div>
+					  <!-- /.box-body -->
+				</div>   
+
+			</div>	
+	
+	
+    <!-- 创建资源结束 -->
+        </div>
+        <!-- /.col (RIGHT) -->
+      </div>
+</div>

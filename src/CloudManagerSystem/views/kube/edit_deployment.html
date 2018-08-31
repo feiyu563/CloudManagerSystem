@@ -1,0 +1,30 @@
+<form id="thisFormDeployment">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>服务名称</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{or .name ""}}" disabled>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="hidden" name="namespace" id="namespace" class="form-control" value="{{or .namespace ""}}" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="hidden" name="kind" id="kind" class="form-control" value="{{or .kind ""}}" disabled>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>编辑Yaml</label>
+                <textarea name="edit" id="edit" class="form-control" style="height:340px;color:green"></textarea>
+            </div>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,0 +1,51 @@
+<form id="thisFormHost">
+    <input type="hidden" name="Id" id="Id" value="{{or .Id ""}}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>镜像名称</label>
+                <input type="text" name="Name" class="form-control" placeholder="like:redis" value="{{or .m.Name ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>镜像版本</label>
+                <input type="text" name="Tag" class="form-control" placeholder="like:v1" value="{{or .m.Tag ""}}">
+            </div>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>环境变量</label>
+                <input type="text" name="Env" class="form-control" placeholder="Env" value="{{or .m.Env ""}}">
+            </div>
+        </div> 
+        <div class="col-md-6">
+			<div class="form-group">
+				<label>启动命令</label>
+				<input type="text" name="Runcmd" class="form-control" placeholder="tail -f ..." value="{{or .m.Runcmd ""}}">
+			</div>
+		</div>
+    </div>    
+	
+    <div class="row">
+		<div class="col-md-6">
+            <div class="form-group">
+                <label>监控检测</label>
+				<input type="text" name="Heartbeat" class="form-control" placeholder=""  value="{{or .m.Heartbeat ""}}">
+            </div>
+        </div>  
+    </div>
+	<!--
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>备注</label>
+                <textarea name="Remark" class="form-control" placeholder=""></textarea>
+            </div>
+        </div>
+    </div>-->
+</form>
+</div>

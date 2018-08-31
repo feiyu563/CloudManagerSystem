@@ -1,0 +1,31 @@
+<form id="thisFormNodeChose">
+    <input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+    <div class="row">
+        <div class="col-md-4">
+                <label>I P :</label>
+                <input type="text" name="Ip" class="form-control"placeholder="192.168.1.1" value="{{or .m.Ip ""}}">
+        </div>
+        <div class="col-md-4">
+                <label>角色 :</label>
+				<select name="Role" id="Roles" class="form-control bs-select">
+					<option value="0">master</option>
+					<option value="1">node</option>
+				</select>
+        </div>
+    </div>
+		
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">     
+						<input type="button" class="btn btn-info" onclick="Serach();" value="查询">  
+                    </div>
+                    <table id="dataGridNodeChose"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>

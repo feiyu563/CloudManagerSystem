@@ -1,0 +1,22 @@
+
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>集群名称</label>
+                <input type="text" name="Name" id="Name" class="form-control" placeholder="K8S" value="{{or .m.Name ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+			<form id="thisFormCluster" enctype="multipart/form-data">
+				<div class="form-group">
+					<input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+					<input type="file" id="Kubeconfig" name="Kubeconfig">
+					<br />
+					<label id="filename">已选择Kubeconfig文件：{{or .Filename ""}}</label>
+				</div>
+			</form>
+        </div>
+    </div>
+
+</div>

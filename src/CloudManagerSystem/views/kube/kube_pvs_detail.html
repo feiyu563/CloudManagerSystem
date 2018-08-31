@@ -1,0 +1,74 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Kubernetes管理
+        <small>PersistentVolume Detail</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{urlfor "BaseclusterController.Hosts"}}">
+                <i class="fa fa-dashboard"></i> Kubernetes管理</a>
+        </li>
+        <li class="active">PersistentVolume Detail</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- 页面内容开始 -->
+    <div class="row">
+        <div class="col-md-12">           
+
+                <div class="box box-solid collapsed-box">
+					<div class="col-md-12"> 
+						<h3>详情</h3>
+					</div>
+                    <div class="box-header with-border">
+						<div class="col-md-12"> 
+							<hr></hr>
+							<p id="name"></p>
+							<div id="annotations"></div>
+							<br />
+							<p id="creationTimestamp"></p>
+							<p id="status"></p>
+							<p id="claim"></p>
+							<p id="reclaimPolicy"></p>
+							<p id="accessModes"></p>
+							<p id="storageClass"></p>
+							<p id="reason"></p>
+							<p id="message"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-solid collapsed-box">
+					<div class="col-md-12"> 
+						<h3>来源</h3>
+					</div>
+                    <div class="box-header with-border">
+						<div class="col-md-12"> 
+							<hr></hr>
+							<h3 id="key"></h3>
+							<p id="monitors"></p>
+							<p id="image"></p>
+							<p id="user"></p>
+							<p id="keyring"></p>
+							<p id="secretRef"></p>
+							<p id="pool"></p>
+                        </div>
+                    </div>
+                </div>
+			
+
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar1">
+                        <h4>总量</h4>
+                    </div>
+                    <table id="dataGridPvsDetail"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页面内容结束 -->
+</section>
+<!-- /.content -->

@@ -1,0 +1,363 @@
+<script src="/static/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript"></script>
+<script src="/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript"></script>
+<script src="/static/plugins/bootstrap-table/cookie/bootstrap-table-cookie.js"></script>
+<!-- x-editable插件 -->
+<script src="/static/plugins/x-editable/js/bootstrap-editable.min.js"></script>
+<!-- bootstrap-table启用x-editable插件 -->
+<script src="/static/plugins/bootstrap-table/bootstrap-table-editable.js"></script>
+
+<script>
+
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	//var clusterid=$('#ClusterId').val();
+	var selectdN="";
+	var selectdI="";
+    $(function () {
+          Namespcedatainit(); 
+    })
+	
+	function Namespcedatainit(){
+		//初始化NamespceSelect选择
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Get"}}',
+			async: false,
+			type: "get",
+			data:{clusterId:'{{.clusterId}}'},
+			success: function (data, status) {
+			　　$.each(data.rows, function (key, value) {
+					if(value.Id!='{{.m.NamespaceId}}'){
+			　　　　	$('#NamespaceId.selectpicker').append("<option value=" + value.Id + ">" +  value.Name + "</option>");
+					}else{
+						$('#NamespaceId.selectpicker').append("<option value=" + value.Id + ">" +  value.Name + "</option>");
+						selectdN= value.Id;
+					}
+			　　});
+			//生成NamespceSelect数据
+		　　$('#NamespaceId').selectpicker('refresh');
+			$('#NamespaceId').selectpicker('val', selectdN);
+			$('#NamespaceId').selectpicker('render');
+			},
+		});
+	}
+
+	
+	var $dataGridKubeDeploy = $('#dataGridKubeDeploy');
+    //高亮显示id
+    var highlightPk = null ;
+    //初始化加载
+    $(function () {
+        pageInit();
+    });
+
+    //初始化页面
+    function pageInit() {
+
+        //初始化表格
+        dataGridKubeDeployInit();
+        //绑定加载成功的事件，成功后高亮显示当前项
+        $dataGridKubeDeploy.on('load-success.bs.table', function () {
+            if (highlightPk !== null && typeof highlightPk !== 'undefined') {
+                sdtheme.highlight($dataGridKubeDeploy.find('tbody tr[data-pk="' + highlightPk + '"]'));
+            }
+            //高亮显示一次后失效
+            highlightPk = null;
+        });
+    };
+
+    //刷新当前页
+    //function refresh(pk) {
+    //    $dataGridKubeDeploy.bootstrapTable('refresh');
+    //    highlightPk = pk;
+    //}
+
+    //bootstrap table data init
+    function dataGridKubeDeployInit() {
+        $dataGridKubeDeploy.bootstrapTable({
+            url: '{{.url}}',
+            method: 'get',
+            sidePagination: 'server', //服务器端用 server
+            //idField: 'Id',
+            //queryParamsType: 'limit',
+            /*queryParams: function (params) {
+                //params的自带参数类型由queryParamsType决定
+                params.Ip = $('.searchForm input[name="Ip"]').val();
+                return params;
+            },*/
+            //pagination: true,
+            //showRefresh: true,
+            //showColumns: true,
+            toolbar: '#toolbar',
+            //pageSize: 5,
+            //pageList: [5, 10, 20, 100, 200],
+            //paginationShowPageGo: true,//20170812 lht 扩展select跳转
+            //paginationUseBSSelect: true,//20170812 lht 扩展select跳转 启用BoostrapSelect(页面须引用botstrap-select.min.js)
+            //cookie: true,
+            classes: 'table table-bordered table-hover',
+            undefinedText: '',
+            //sortName: 'Id',
+            //sortOrder: 'desc',
+            //rowAttributes: function (row, index) {
+            //    return { 'data-pk': row.Id,'data-pk1': row.IsMain }
+            //},
+            columns: [{
+				field: 'state',
+                checkbox: true,
+                radio: false,
+            }, {
+                field: 'Id',
+                title: 'ID',
+                width: '90px',
+                align: 'center',
+            }, {
+                field: 'Name',
+                title: '名称',
+                align: 'center',
+				width: '120px',
+				formatter: function (value, row, index) {
+				if (value!=undefined){
+						return value;
+					}else{
+						return '';
+					}
+
+				}, 
+				editable: {
+                    type: 'text',
+                    title: '名称',
+					emptytext: "---",
+                    validate: function (v) {
+                        if (!v) return '名称不能为空';
+                    }
+                }
+            }, {
+                field: 'ContainerPort',
+                title: '容器端口',
+                width: '100px',
+                align: 'center',
+				formatter: function (value, row, index) {
+				if (value!=undefined){
+						return value;
+					}else{
+
+						return '';
+					}
+
+				}, 
+				editable: {
+                    type: 'text',
+                    title: '容器端口',
+					emptytext: "---",
+                    validate: function (v) {
+                        if (!v) return '容器端口不能为空';
+                    }
+                }
+            }, {
+                field: 'ServicePort',
+                title: '服务端口',
+                width: '100px',
+                align: 'center',
+				formatter: function (value, row, index) {
+				if (value!=undefined){
+						return value;
+					}else{
+
+						return '';
+					}
+
+				}, 
+				editable: {
+                    type: 'text',
+                    title: '服务端口',
+					emptytext: "---",
+                    validate: function (v) {
+                        if (!v) return '服务端口不能为空';
+                    }
+                }
+            }, {
+                field: 'Protocol',
+                title: '协议类型',
+                align: 'center',
+				width: '120px',
+				/*formatter: function (value, row, index) {
+					var str="TCP/UDP";
+					if (value!=undefined){
+						str=value;
+					}
+					return str;
+				},*/
+				editable: {
+                    type: 'select',
+                    title: '端口类型',
+					//emptytext: 'TCP/UDP',
+					validate: function (value) {
+								if (!$.trim(value)) {
+									return '端口类型不能为空';
+								}
+							},
+                    source: [{value:'TCP/UDP',text:'TCP/UDP'},{value:'TCP',text:'TCP'},{value:'UDP',text:'UDP'}]
+                }
+            },{
+                field: 'IsMain',
+                title: '主服务端口',
+                width: '100px',
+                align: 'center',
+				/*formatter: function (value, row, index) {
+					if (value==undefined){
+						value='No';
+					}
+					return value;
+				},*/
+				editable: {
+                    type: 'select',
+                    title: '端口类型',
+					//emptytext: '选择端口类型',
+					validate: function (value) {
+								if (!$.trim(value)) {
+									return '端口类型不能为空';
+								}
+							},
+                    source: [{value:'Yes',text:'Yes'},{value:'No',text:'No'}]
+                }
+            }],	
+
+            onLoadSuccess: function (data) {
+                layer.closeAll('loading');
+                //
+                //CheboxUniform()
+            },
+            //onSort: function (name, order) {
+                //alert('name:' + name + " order:" + order);
+            //},
+            onPageChange: function () {
+                //layer.load();
+            },
+            onCheckAll: function (rows) {
+                //禁用删除需要勾选才能用的按钮
+                $(".table-btn-check-enable").removeAttr('disabled');
+            },
+            onCheck: function (rows) {
+                //禁用删除需要勾选才能用的按钮
+                $(".table-btn-check-enable").removeAttr('disabled');
+            },
+            onUncheck: function (rows) {
+                //禁用删除需要勾选才能用的按钮
+                if ($("#dataGridKubeDeploy").bootstrapTable("getSelections").length === 0) {
+                    $(".table-btn-check-enable").attr('disabled', 'disabled');
+                }
+            }, onUncheckAll: function () {
+                //禁用删除需要勾选才能用的按钮
+                if ($("#dataGridKubeDeploy").bootstrapTable("getSelections").length === 0) {
+                    $(".table-btn-check-enable").attr('disabled', 'disabled');
+                }
+            },
+            onLoadError: function (status) {
+                layer.alert('获取数据失败,错误代码：' + status);
+            }
+			
+        });
+		$dataGridKubeDeploy.bootstrapTable('hideColumn', 'Id');
+    } 
+	
+	//添加按钮新增一行表格
+	$('#addfun').click(function(){
+		var data = {'IsMain':'No','Protocol':'TCP/UDP'};
+		$('#dataGridKubeDeploy').bootstrapTable('append',data);    
+    });
+	
+	
+    ///用一个带有title值的span将值包裹起来
+    function formatterWapBySpan(value, row, index) {
+        if (value !== null) {
+            return '<span title="' + value + '">' + value + '</span>';
+        }
+        return "";
+    } 
+	
+    function DeleteFun() {
+        var url = '{{ urlfor "KubeServicePortController.Delete"}}';
+        var rows = $dataGridKubeDeploy.bootstrapTable("getSelections")
+        if (rows.length == 0) {
+            layer.alert('请选择想要删除的项', { icon: 0, title: '提示' });
+            return;
+        }
+        var ids = [];
+        $(rows).each(function (i, e) {
+            ids.push(e.Id);
+        });
+        layer.confirm('您是否要删除所选的项？', {
+            btn: ['是', '否'], icon: 3, title: '请确认'
+        }, function () {
+			//先删除表格显示
+            var delids = $.map($dataGridKubeDeploy.bootstrapTable("getSelections"), function (row) {
+                return row.state;
+            });
+			$dataGridKubeDeploy.bootstrapTable('remove', {field: 'state', values: delids});
+			
+			//通过restful删除
+            var dataValues = { ids: ids.join(',') };
+			console.log(dataValues);
+			url +='?ids='+ids.join(',');
+			//delete方式
+			$.ajax({
+				   type: "DELETE",
+				   url: url,
+				   data: dataValues,
+				   success: function(re){
+						if (re.code === 0) {
+						layer.msg(re.msg, { icon: 1, title: '成功' });
+						//refresh();
+						} else {
+							layer.alert(re.msg, { icon: 2, title: "失败" });
+						}
+				   }
+				});
+        });
+    }
+
+    function FormSubmit() {	
+		var data = $dataGridKubeDeploy.bootstrapTable('getData'),
+        index_parents = $(this).parents('tr').data('index');
+		var JSONKubeService={
+			Service: {
+				Id: $('#Id').val(),
+				Name: $('#Name').val(), //服务名称
+				NamespaceId: $('#NamespaceId').val(), //命名空间
+				ImageName: $('#ImageName').val(), //镜像名称
+				//Volume: $('#Volume').val(), //持久化存储
+				Env: $('#Env').val(), //环境变量设置
+				Run: $('#Run').val(), //启动命令
+				HostIp: Boolean($('#HostIp').val()), //HostIP
+				CpuNeed: $('#CpuNeed').val(), //CPU 需求值(MI)
+				CpuMax: $('#CpuMax').val(),//CPU 极限值(MI)
+				MemoryNeed: $('#MemoryNeed').val(),//内存 (M) 需求值
+				MemoryMax: $('#MemoryMax').val(),//内存 (M) 极限值
+				ServiceNum: parseInt($('#ServiceNum').val()),//服务数量
+				//GroupId: $('#GroupId').val(),//运行区域
+				Heartbeat: $('#Heartbeat').val(),//健康检查命令
+				RunTime: parseInt($('#RunTime').val()),//启动时间（s）
+				SoketTime: parseInt($('#SoketTime').val()),//超时时间（s）
+				//NetSPT: $('#NetSPT').val(),//网络隔离
+				//VolSPT: $('#VolSPT').val(),//存储隔离
+				},
+			ServicePort: data,
+		};
+		var json_data = JSON.stringify(JSONKubeService);
+		$.ajax({
+			url: '{{ urlfor "KubeServiceController.Save"}}',
+			async: false,
+			type: "POST",
+			//contentType : "application/json",
+			dataType: "json",
+			data: json_data,
+			success: function (re) {
+				if(re.code == 0){
+					parent.layer.msg(re.msg)
+					parent.refresh(re.obj)
+					parent.layer.close(index)
+				}else{
+					parent.layer.alert(re.msg,{icon:2,title:'失败'})
+				}
+			}
+		});
+    }
+</script>

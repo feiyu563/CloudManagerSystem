@@ -1,0 +1,7 @@
+.idea/
+.idea/vcs.xml
+logs/
+*.iml
+# Vi
+*.swp
+CloudManagerSystem.exe

@@ -1,0 +1,71 @@
+<script>
+
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+    function FormSubmit() {	
+		var data = "",
+        index_parents = $(this).parents('tr').data('index');
+		
+		var KubeUserGroupVO={
+			KubeUserGroup: {GroupName: $('#GroupName').val(),Id: $('#Id').val(),ClusterId: $('#ClusterId').val(),CreateUser: $('#CreateUser').val(),Remark: $('#Remark').val()},
+			KubeBinds: data,
+		};
+		console.log(KubeUserGroupVO);
+		var json_data = JSON.stringify(KubeUserGroupVO);
+		$.ajax({
+			url: '{{ urlfor "KubeUserGroupController.Save"}}',
+			async: false,
+			type: "POST",
+			//contentType : "application/json",
+			dataType: "json",
+			data: json_data,
+			success: function (re) {
+				if(re.code == 0){
+					parent.layer.msg(re.msg)
+					parent.refresh(re.obj)
+					parent.layer.close(index)
+				}else{
+					parent.layer.alert(re.msg,{icon:2,title:'失败'})
+				}
+			}
+		});
+    }
+	
+	function ServiceChose(){
+	
+        var title = '选择服务';
+        var url = '{{ urlfor "KubeController.EditDeployServiceChose"}}';
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: false,
+            shade: 0.2,
+            maxmin: true,
+            shift: 1,
+            area: ['700px', '500px'],
+            content: url,
+            btn: ['保存', '关闭'],
+            yes: function (index, layero) {
+                var iframeWin = window[layero.find('iframe')[0]['name']];
+                var req=iframeWin.FormSubmit();
+				console.log(req);
+            },
+			zIndex: layer.zIndex, //重点1
+			success: function(layero){
+				layer.setTop(layero); //重点2
+			  }
+        });
+
+	}
+	
+	$('#stype').change(function(){
+		if($("#stype").val()=='Ingress'){
+			$("#stypename").text('域名');
+			$("#stypevalue").attr("name","ingressvalue");
+		}else{
+			$("#stypename").text('外部端口');
+			$("#stypevalue").attr("name","proxyvalue");
+		}
+	
+	})
+</script>

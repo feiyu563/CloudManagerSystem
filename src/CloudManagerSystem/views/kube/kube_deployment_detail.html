@@ -1,0 +1,66 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Kubernetes管理
+        <small>Deployment</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{urlfor "BaseclusterController.Hosts"}}">
+                <i class="fa fa-dashboard"></i> Kubernetes管理</a>
+        </li>
+        <li class="active">Deployment</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- 页面内容开始 -->
+    <div class="row">
+        <div class="col-md-12">           
+
+                <div class="box box-solid collapsed-box">
+					<div class="col-md-12"> 
+						<h3>详情</h3>
+					</div>
+                    <div class="box-header with-border">
+						<div class="col-md-12"> 
+							<hr></hr>
+							<p id="name"></p>
+							<p id="namespace"></p>
+							<p id="labels"></p>
+							<p id="annotations"></p>
+							<p id="createtime"></p>
+							<p id="selector"></p>
+							<p id="strategy"></p>
+							<p id="typeMeta"></p>
+							<p id="minReadySeconds"></p>
+							<p id="revisionHistoryLimit"></p>
+							<p id="rollingUpdateStrategy"></p>
+							<p id="statusInfo"></p>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">
+                        <h4>新副本集</h4>
+                    </div>
+                    <table id="dataGridDeploymentDetail"></table>
+                </div>
+            </div>
+			
+
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar1">
+                        <h4>事件</h4>
+                    </div>
+                    <table id="dataGridDeploymentDetailEvent"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页面内容结束 -->
+</section>
+<!-- /.content -->

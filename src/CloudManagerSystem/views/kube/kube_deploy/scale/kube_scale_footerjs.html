@@ -1,0 +1,59 @@
+<script>
+
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    $(function () {
+          Namespcedatainit();
+    })
+
+	function Namespcedatainit(){
+		//初始化Namespce选择
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Get"}}',
+			async: false,
+			type: "get",
+			data:{clusterId:'{{.clusterId}}'},
+			success: function (data, status) {
+			　　$.each(data.rows, function (key, value) {
+					if(value.Id=='{{.m.NamespaceId}}'){
+						$('#NamespaceId').val(value.Id);
+						$('#NamespaceName').val(value.Name);
+					}
+			　　});
+			},
+		});
+	}
+
+    function FormSubmit() {
+        index_parents = $(this).parents('tr').data('index');
+		var JSONKubeService={
+				Kind: "deployment",
+				//Id: $('#Id').val(),
+				Name: $('#Name').val(), //服务名称
+				Namespace: $('#NamespaceName').val(), //命名空间
+				//CpuNeed: parseInt($('#CpuNeed').val()), //CPU 需求值(MI)
+				//CpuMax: parseInt($('#CpuMax').val()),//CPU 极限值(MI)
+				//MemoryNeed: parseInt($('#MemoryNeed').val()),//内存 (M) 需求值
+				//MemoryMax: parseInt($('#MemoryMax').val()),//内存 (M) 极限值
+				Count: $('#ServiceNum').val(),//服务数量
+				//GroupId: $('#GroupId').val(),//运行区域
+			};
+		var json_data = JSON.stringify(JSONKubeService);
+		$.ajax({
+			url: '{{ urlfor "KubeServiceController.Scale"}}',
+			async: false,
+			type: "POST",
+			//contentType : "application/json",
+			dataType: "json",
+			data: json_data,
+			success: function (re) {
+				if(re.code == 0){
+					parent.layer.msg(re.msg)
+					parent.refresh(re.obj)
+					parent.layer.close(index)
+				}else{
+					parent.layer.alert(re.msg,{icon:2,title:'失败'})
+				}
+			}
+		});
+    }
+</script>

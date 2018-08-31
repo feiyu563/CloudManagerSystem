@@ -1,0 +1,83 @@
+<script>
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+   $(function () {	
+          pageInit(); 
+    })
+    function pageInit(){
+        //取已经上传的文件名回显
+		
+    }	
+
+    /*function validateInfo() {
+        var $thisFormCluster = $('#thisFormCluster');
+        $thisFormCluster.sdvalidate({
+            submitHandler: function (form) {
+				var url ='{{ urlfor "KubeClusterController.Save"}}'
+				var data = $thisFormCluster.serialize();				
+				$.sdpost(url,data,function(re){
+					if(re.code === 0){
+						parent.layer.msg(re.msg)
+						parent.refresh(re.obj)
+						parent.layer.close(index)
+					}else{
+						parent.layer.alert(re.msg,{icon:2,title:'失败'})
+					}
+				});
+               return false;
+            }
+        });
+    }*/
+
+	$("#Kubeconfig").on("change", function(){
+		filename=$('#Kubeconfig').prop('files')[0].name;
+		$('#filename').text('已选择Kubeconfig文件：config');
+    });
+	
+    function FormSubmit() {
+			/*
+			var url ='{{ urlfor "KubeClusterController.Save"}}';
+            var dataValues = { 
+					Id: $('#Id').val(),
+					Name: $('#Name').val(),
+					Remark: $('#Remark').val()
+					};
+			//post方式
+			$.ajax({
+				   type: "post",
+				   url: url,
+				   async: false,
+				   data: dataValues,
+				   dataType: "json",
+				   success: function(re){
+						if(re.code === 0){
+							parent.layer.msg(re.msg)
+							parent.refresh(re.obj)
+							parent.layer.close(index)
+						}else{
+							parent.layer.alert(re.msg,{icon:2,title:'失败'})
+						}
+				   }
+				});*/
+				
+		$.ajax({
+			url: '{{ urlfor "BaseclusterController.Savecfg"}}',
+			type: 'POST',
+			cache: false,
+			data: new FormData($('#thisFormCluster')[0]),
+			processData: false,
+			contentType: false
+		}).done(function(re) {
+			if(re.code === 0){
+				parent.layer.msg(re.msg)
+				parent.refresh(re.obj)
+				parent.layer.close(index)
+			}else{
+				parent.layer.alert(re.msg,{icon:2,title:'失败'})
+			}
+		}).fail(function(re) {
+
+		});
+
+    }
+</script>

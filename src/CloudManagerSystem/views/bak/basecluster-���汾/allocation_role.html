@@ -1,0 +1,26 @@
+<form id="thisFormRole">
+    <input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>集群名称</label>
+                <input type="text" name="Clustername" class="form-control" placeholder="k8s" value="{{or .m.Ip ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">
+                        <input type="button" class="btn btn-info" onclick="ChoseUser()" value="选择用户">                           
+                        <button class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun()">
+                            <i class="fa fa-trash"></i> 删除
+                        </button>
+                    </div>
+                    <table id="dataGridRole"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>

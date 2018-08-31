@@ -1,0 +1,40 @@
+<form id="thisFormSc">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>CEPH Pool池名称:</label>
+                <input type="text" name="poolName" class="form-control" placeholder="">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>用户</label>
+                <input type="text" name="user" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>命名空间</label>
+                <input type="text" name="k8sNameSpace" id="K8sNameSpace" class="form-control" placeholder="" value="{{or .namespce ""}}" disabled>
+            </div>
+        </div> 
+        <div class="col-md-6">
+			<div class="form-group">
+				<label>存储密钥名称</label>
+				<input type="text" name="k8sSecretName" class="form-control" placeholder="">
+			</div>
+		</div>
+    </div>    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>StorageClass名称</label>
+                <input type="text" name="k8sStorageClassName" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+</form>
+</div>

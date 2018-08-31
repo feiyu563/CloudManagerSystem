@@ -1,0 +1,226 @@
+	<input type="hidden" name="Id" id="Id" value="{{or .Id ""}}">
+      <div class="row">
+        <div class="col-md-12">
+    <!-- 创建资源开始 -->
+
+			<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs">
+						  <li class="active"><a href="#tab_3" data-toggle="tab">创建应用</a></li>
+						  <!--<li><a href="#tab_1" data-toggle="tab">从文本框创建</a></li>
+						  <li><a href="#tab_2" data-toggle="tab">从文件创建</a></li>-->
+						</ul>
+						<div class="tab-content">
+									<div class="tab-pane active" id="tab_3">
+									
+										<div class="box box-primary">
+											<div class="box-header with-border">
+											  <h3 class="box-title"><b>创建<code>应用</code></b></h3>
+											</div>
+											<div class="box-body">
+											
+												<div class="form-group" style="height: 34px">
+													<div class="col-xs-6" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon">服务名称</span>
+															<!-- /btn-group -->
+															<input type="text" id="Name" class="form-control"  placeholder="zx-text" value="{{or .m.Name ""}}">
+														</div>
+													</div>
+													<div class="col-xs-6" style="padding-left: 0px;">
+														<div class="input-group">
+														  <span class="input-group-addon">命名空间</span>
+														  <!--<select class="form-control select2" id="NamespaceId" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>-->
+														  <select id="NamespaceId" class="selectpicker show-tick form-control" title="请选择命名空间" data-live-search="true"></select>
+														</div>
+													</div>
+												</div>
+												
+												<div class="form-group">
+													<div class="input-group" >
+													  <span class="input-group-addon">镜像名称</span>
+													  <!--<select id="Image" class="selectpicker show-tick form-control" title="请选择镜像" data-live-search="true"></select>-->
+													  <input type="text" id="ImageName" class="form-control"  placeholder="redis:v1" value="{{or .m.ImageName ""}}">
+													</div>
+												</div>
+
+												
+												<!--<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon">持久化存储</span>
+														<input type="text" class="form-control"  id="Volume" placeholder="" disabled>
+													</div>
+												</div>-->
+												
+												<div class="form-group">
+													<div class="input-group">
+														<span class="input-group-addon">环境变量设置</span>
+														<!-- /btn-group -->
+														<input type="text" class="form-control" id="Env" placeholder="Name='zxbk'" value="{{or .m.Env ""}}">
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px">
+													<div class="input-group">
+														<span class="input-group-addon">启动命令</span>
+														<!-- /btn-group -->
+														<input type="text" class="form-control" id="Run" placeholder="./run.sh" value="{{or .m.Run ""}}">
+													</div>
+												</div>
+
+												<div class="form-group">
+													<div class="input-group" style="width:200px;">
+														  <span class="input-group-addon">HostIp</span>
+														  <select class="form-control" id="HostIp" >
+															{{if .m.HostIp}}
+															<option value=true selected>是</option>
+															<option value=false >否</option>
+															{{else}}
+															<option value=true >是</option>
+															<option value=false selected>否</option>
+															{{end}}
+														  </select>
+													</div>
+												</div>
+												
+												
+												<div class="box box-solid">
+													<div class="box-body">
+														<div class="btn-group" id="toolbar">     
+															<input type="button" class="btn btn-info" id="addfun" value="添加">  
+															<input type="button" class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun();" value="删除">  
+														</div>
+														<table id="dataGridKubeDeploy"></table>
+													</div>
+												</div>
+												
+												<div class="form-group"  style="height: 12px">
+													<div class="col-xs-12" style="color:green;padding-left: 0px;font-size:18px">
+														<label class="control-label">资源分配:</label>
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px">
+													<div class="col-xs-6" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon">CPU 需求值(核心数)</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="CpuNeed" placeholder="0.1" value="{{or .m.CpuNeed "0.1"}}">
+														</div>
+													</div>
+													
+													<div class="col-xs-6">
+														<div class="input-group">
+															<span class="input-group-addon">CPU 极限值(核心数)</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="CpuMax" placeholder="0.2" value="{{or .m.CpuMax "0.2"}}">
+														</div>
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px";>
+													<div class="col-xs-6" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon">内存 (Mi) 需求值</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="MemoryNeed" placeholder="50" value="{{or .m.MemoryNeed "50"}}">
+														</div>
+													</div>
+													
+													<div class="col-xs-6">
+														<div class="input-group">
+															<span class="input-group-addon">内存 (Mi) 极限值</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="MemoryMax" placeholder="100" value="{{or .m.MemoryMax "100"}}">
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group"  style="height: 12px">
+													<div class="col-xs-12" style="color:red;padding-left: 0px;font-size:18px">
+														<label class="control-label">部署控制:</label>
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px">
+													<div class="col-xs-12" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon">服务数量</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="ServiceNum" placeholder="1" value="{{or .m.ServiceNum "1"}}">
+														</div>
+													</div>
+													
+													<!--<div class="col-xs-6">
+														<div class="input-group">
+															<span class="input-group-addon">运行区域</span>
+															<select class="form-control" id="GroupId" disabled>
+																<option>label1</option>
+																<option>label2</option>
+															</select>
+														</div>
+													</div>-->
+												</div>
+												
+												<div class="form-group" >
+													<div class="input-group" style="width:98%;">
+														  <span class="input-group-addon">健康检查命令</span>
+														  <input type="text" class="form-control" id="Heartbeat" placeholder="curl localhost:8080" value="{{or .m.Heartbeat ""}}">
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px";>
+													<div class="col-xs-6" style="padding-left: 0px;">
+														<div class="input-group">
+															<span class="input-group-addon">启动时间（s）</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="RunTime" placeholder="10" value="{{or .m.RunTime ""}}">
+														</div>
+													</div>
+													
+													<div class="col-xs-6">
+														<div class="input-group">
+															<span class="input-group-addon">超时时间（s）</span>
+															<!-- /btn-group -->
+															<input type="number" class="form-control" id="SoketTime" placeholder="15" value="{{or .m.SoketTime ""}}">
+														</div>
+													</div>
+												</div>
+												
+												<!--<div class="form-group"  style="height: 12px">
+													<div class="col-xs-12" style="color:red;padding-left: 0px;font-size:18px">
+														<label class="control-label">隔离控制:</label>
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px">
+													<div class="input-group">
+														<span class="input-group-addon">网络隔离</span>
+														<input type="text" class="form-control" id="NetSPT" placeholder="" disabled>
+													</div>
+												</div>
+												
+												<div class="form-group" style="height: 34px";>
+													<div class="input-group">
+														<span class="input-group-addon">存储隔离</span>
+														<input type="text" class="form-control" id="VolSPT" placeholder="" disabled>
+													</div>
+												</div>-->
+											</div>
+											  <!-- /.box-body -->
+
+
+										</div>
+										  
+										  
+									</div>
+						  <!-- /.tab-pane -->
+						</div>
+						<!-- /.tab-content -->
+			</div>	
+	
+	
+    <!-- 创建资源结束 -->
+        </div>
+        <!-- /.col (RIGHT) -->
+      </div>
+</div>

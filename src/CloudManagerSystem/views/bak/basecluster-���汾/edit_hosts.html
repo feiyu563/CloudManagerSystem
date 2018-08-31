@@ -1,0 +1,54 @@
+<form id="thisFormHost">
+    <input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>IP</label>
+                <input type="text" name="Ip" class="form-control" placeholder="192.168.1.1" value="{{or .m.Ip ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Label</label>
+                <input type="text" name="Lable" class="form-control" placeholder="role:master" value="{{or .m.Lable ""}}">
+            </div>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>HOSTNAME</label>
+                <input type="text" name="HostName" class="form-control" placeholder="master1" value="{{or .m.HostName ""}}">
+            </div>
+        </div> 
+        <div class="col-md-6">
+			<div class="form-group">
+				<label>角色</label>
+				<select name="Role" id="Roles" class="form-control bs-select">
+					<option value="0">master</option>
+					<option value="1">node</option>
+				</select>
+			</div>
+		</div>
+    </div>    
+	<!--
+    <div class="row">
+		<div class="col-md-6">
+            <div class="form-group">
+                <label>密码</label>
+				<input type="text" name="Mobile" class="form-control" placeholder="" value="">
+            </div>
+        </div>  
+    </div>
+	-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>备注</label>
+                <textarea name="Remark" class="form-control" placeholder="">{{or .m.Remark ""}}</textarea>
+            </div>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,0 +1,120 @@
+package controllers
+
+import (
+	"net/http"
+	"strings"
+	"io/ioutil"
+	"fmt"
+	"encoding/json"
+	"github.com/astaxie/beego"
+	"strconv"
+	"sync"
+)
+
+type KubeImagesController struct {
+	BaseController
+}
+
+func (c *KubeImagesController) Prepare() {
+	//先执行
+	c.BaseController.Prepare()
+	//如果一个Controller的少数Action需要权限控制，则将验证放到需要控制的Action里
+	//c.checkAuthor("Namespaces", "Nodes")
+	//如果一个Controller的所有Action都需要登录验证，则将验证放到Prepare
+	//这里注释了权限控制，因此这里需要登录验证
+	c.checkLogin()
+}
+
+type Project struct {
+	Project_id int `json:"project_id"`
+	Name string `json:"name"`
+}
+var ImageChan chan string
+var wg sync.WaitGroup
+//Projects
+func (c *KubeImagesController) GetImages()  {
+	err,resp:=GetSwagger("http://192.168.1.158/api/projects")
+	if err != nil {
+		beego.Error(err)
+	}
+	project:=[]Project{}
+	json.Unmarshal(resp,&project)
+	if len(project)>0 {
+		for _,p:=range project{
+			wg.Add(1)
+			go Repositories(p.Project_id)
+		}
+	}
+	fmt.Println("I'm OK!Step 1")
+	wg.Wait()
+	fmt.Println("I'm OK!Step 2")
+	beego.Error("\n\n\n\n\n\n")
+	for i:=range ImageChan {
+		fmt.Println(i)
+	}
+	fmt.Println("I'm OK!Step 3")
+	c.Data["json"] = ""
+	c.ServeJSON()
+}
+type Repositorie struct {
+	//Id int64 `json:"id"`
+	Name string `json:"name"`
+}
+func Repositories(id int)  {
+	err,resp:=GetSwagger("http://192.168.1.158/api/repositories?project_id="+strconv.Itoa(id))
+	if err != nil {
+		beego.Error(err)
+		return
+	}
+	repositorie:=[]Repositorie{}
+	json.Unmarshal(resp,&repositorie)
+	if len(repositorie)>0 {
+		for _,r:=range repositorie{
+			wg.Add(1)
+			go Tags(r.Name)
+		}
+	}
+	wg.Done()
+}
+
+type Tag struct {
+	Name string `json:"name"`
+}
+func Tags(name string) {
+	err,resp:=GetSwagger("http://192.168.1.158/api/repositories/"+name+"/tags")
+	if err != nil {
+		beego.Error(err)
+		return
+	}
+	tag:=[]Tag{}
+	json.Unmarshal(resp,&tag)
+	if len(tag)>0 {
+		for _,t:=range tag{
+			ImageChan <- name+":"+t.Name
+		}
+	}
+	wg.Done()
+}
+
+func GetSwagger(url string) (error,[]byte) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", url, strings.NewReader("beegosessionID=3a7f697427caed8eb17f14368bb8c832"))
+	//req, err := http.NewRequest("GET", url, strings.NewReader(""))
+	if err != nil {
+		// handle error
+	}
+	//req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	//req.Header.Set("Cookie", "rem-username=admin; beegosessionID=3a7f697427caed8eb17f14368bb8c832")
+	resp, err := client.Do(req)
+	if err != nil {
+		return err,nil
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err,nil
+	}
+	//fmt.Println(url,string(body))
+	fmt.Println("Done:  "+url)
+	return nil,body
+}

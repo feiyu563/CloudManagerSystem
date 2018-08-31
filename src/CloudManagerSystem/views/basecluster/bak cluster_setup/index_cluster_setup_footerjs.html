@@ -1,0 +1,31 @@
+<script src="/static/plugins/bootstrap-duallistbox/jquery.bootstrap-duallistbox.js"></script>
+<script>
+</script>
+
+<script>
+	  var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+    //初始化加载
+    $(function () {
+        pageInit();
+    });
+
+	
+    function pageInit() {
+	
+		demo1.append('<option value="apples">Apples</option>');
+		demo1.append('<option value="apples">APP</option>');
+		demo1.append('<option value="apples">orange</option>');
+		demo1.append('<option value="oranges" selected>Oranges</option>');
+		
+		demo1.bootstrapDualListbox('refresh', true);
+	
+		//demo1.append('Apples Oranges');
+		//demo1.bootstrapDualListbox('refresh');
+    };
+
+
+  $("#searchForm").submit(function() {
+	alert($('[name="duallistbox_demo1[]"]').val());
+	return false;
+  });
+</script>

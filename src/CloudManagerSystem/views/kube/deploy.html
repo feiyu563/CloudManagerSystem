@@ -1,0 +1,60 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        应用服务管理
+        <small>部署服务</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{urlfor "BaseclusterController.Hosts"}}">
+                <i class="fa fa-dashboard"></i> 应用服务管理</a>
+        </li>
+        <li class="active">部署服务</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- 页面内容开始 -->
+    <div class="row">
+        <div class="col-md-12">           
+            <form id="searchForm" class="searchForm">
+                <div class="box box-solid collapsed-box">
+                    <div class="box-header with-border">
+						<div class="col-md-12"> 
+							<input type="text" name="ServiceName" id="ServiceName" class="form-control pull-left input-wd-md" placeholder="服务名称">
+							<input type="text" name="NamespaceName" id="NamespaceName" class="form-control pull-left input-wd-md" placeholder="命名空间">
+							<input type="text" name="ImageName" id="ImageName" class="form-control pull-left input-wd-md" placeholder="镜像名称">
+							<div class="btn-group">
+								<button type="button" class="btn btn-warning" id="btnSearch"><i class="fa fa-search"></i> 查询</button>
+								<button type="button" class="btn btn-default" id="btnClearSearch"><i class="fa fa-eraser"></i> 清除</button>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /.searchForm -->
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">
+                        <button class="btn btn-info" href="javascript:;" onclick="EditFun(0)">
+                            <i class="fa fa-plus"></i> 添加</button>       
+                        <button class="btn btn-success table-btn-check-enable" href="javascript:;" onclick="Publish()" disabled>
+                            <i class="fa fa-plus"></i> 发布版本</button>   		
+                        <button class="btn btn-primary table-btn-check-enable" href="javascript:;" onclick="History()" disabled>
+                            <i class="fa fa-plus"></i> 历史版本</button>  	
+                        <button class="btn btn-warning table-btn-check-enable" href="javascript:;" onclick="Manage()" disabled>
+                            <i class="fa fa-plus"></i> 服务部署管理</button> 		
+                        <button class="btn btn-default table-btn-check-enable" href="javascript:;" onclick="Scale()" disabled>
+                            <i class="fa fa-plus"></i> 扩容缩容</button> 							
+                        <button class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun()">
+                            <i class="fa fa-trash"></i> 删除
+                        </button>
+                    </div>
+                    <table id="dataGridDeploy"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页面内容结束 -->
+</section>
+<!-- /.content -->

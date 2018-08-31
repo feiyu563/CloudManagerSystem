@@ -1,0 +1,37 @@
+    <input type="hidden" name="KubeUserGroup.ClusterId" id="ClusterId" value="{{or .m.KubeUserGroup.ClusterId ""}}">
+	<input type="hidden" name="KubeUserGroup.Id" id="Id" value="{{or .m.KubeUserGroup.Id ""}}">
+	<input type="hidden" id="CreateUser" value="{{or .m.KubeUserGroup.CreateUser ""}}">
+    <div class="row">
+        <div class="col-md-4">
+			<label>集群名称 :</label>
+			<input type="text" name="ClusterName" id="ClusterName" class="form-control" placeholder="集群名称" value="{{or .m.KubeUserGroup.ClusterName ""}}" disabled>
+        </div>
+    </div>
+	<br />
+	<div class="row">
+        <div class="col-md-4">
+			<label>用户组名称 :</label>
+			<input type="text" name="KubeUserGroup.GroupName" id="GroupName" class="form-control" placeholder="用户组名称" value="{{or .m.KubeUserGroup.GroupName ""}}">
+        </div>
+    </div>
+	<br />
+    <div class="row">
+        <div class="col-md-4">
+			<label>备注 :</label>
+			<input type="text" name="Remark" id="Remark" class="form-control" placeholder="备注" value="{{or .m.KubeUserGroup.Remark ""}}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">     
+						<input type="button" class="btn btn-info" id="addfun" value="添加">  
+						<input type="button" class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun();" value="删除">  
+                    </div>
+                    <table id="dataGridGrantUserGroup"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

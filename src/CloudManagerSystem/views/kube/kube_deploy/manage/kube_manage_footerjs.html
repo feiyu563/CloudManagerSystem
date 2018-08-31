@@ -1,0 +1,75 @@
+<script>
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    $(function () {
+        Init();
+		VersionNameInit();
+    });
+	
+	function Init(){
+		$.ajax({
+			url: '{{ urlfor "KubeServiceController.DataGrid"}}',
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: JSON.stringify({Id:{{.Id}}}),
+			success: function (data) {
+				$('#Id').val('{{.Id}}');
+				$('#Name').val(data.rows[0].Name);
+				$('#NamespaceName').val(data.rows[0].NamespaceName);
+			}
+		});
+	}
+	
+	function VersionNameInit(){
+		//初始化NamespceSelect选择
+		$.ajax({
+			url: '{{ urlfor "KubeServiceVersionController.DataGrid"}}',
+			async: false,
+			type: "post",
+			data:JSON.stringify({Id:'{{.Id}}',order:"desc",sort:"Id"}),
+			success: function (data, status) {
+			　　$.each(data.rows, function (key, value) {
+				　　$('#VersionName.selectpicker').append("<option value=" + value.Id + ">" +  value.VersionName + "</option>");
+					//生成VersionName数据
+				　　$('#VersionName').selectpicker('refresh');
+					//$('#VersionName').selectpicker('val', selectdN);
+					$('#VersionName').selectpicker('render');
+				});
+			}
+		});
+	}
+
+
+    function FormSubmit() {	
+		/*
+			ServiceId string
+			VersionId string
+			Type      int
+			*Namespace string
+		*/
+		var JSONKubeService={
+				ServiceId: {{.Id}},
+				VersionId: $('#VersionName').val(), 
+				Type: $('#Operation').val(),
+				Namespace:{{.Namespace}}
+			};
+		var json_data = JSON.stringify(JSONKubeService);
+		$.ajax({
+			url: '{{ urlfor "KubeServiceController.PublishORRollback"}}',
+			async: false,
+			type: "POST",
+			//contentType : "application/json",
+			dataType: "json",
+			data: json_data,
+			success: function (re) {
+				if(re.code == 0){
+					parent.layer.msg(re.msg)
+					parent.refresh(re.obj)
+					parent.layer.close(index)
+				}else{
+					parent.layer.alert(re.msg,{icon:2,title:'失败'})
+				}
+			}
+		});
+    }
+</script>

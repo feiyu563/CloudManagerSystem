@@ -1,0 +1,22 @@
+    <input type="hidden" name="NamespaceId" id="NamespaceId" value="{{or .m.Id ""}}">
+	<input type="hidden" name="ClusterId" id="ClusterId" value="{{or .m.ClusterId ""}}">
+	<label>集群名称 :</label>
+	<input type="text" name="ClusterName" id="ClusterName" class="form-control" placeholder="集群名称" value="{{or .m.ClusterName ""}}" disabled>
+	<br />
+	<label>命名空间 :</label>
+	<input type="text" name="Name" id="Name" class="form-control" placeholder="命名空间" value="{{or .m.Name ""}}" disabled>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">     
+						<input type="button" class="btn btn-info" id="addfun" value="添加">  
+						<input type="button" class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun();" value="删除">  
+                    </div>
+                    <table id="dataGridAllocationNameSpace"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

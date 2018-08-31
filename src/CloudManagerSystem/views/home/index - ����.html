@@ -1,0 +1,515 @@
+<!-- Content Header (Page header) -->
+    <!-- 头部信息 -->
+	<section class="content-header">
+      <h1>
+        集群汇总信息
+        <small>资源使用率</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">汇总</a></li>
+      </ol>
+    </section>
+	<!-- 头部结束 -->
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- 页面内容开始 -->
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-3" style="box-shadow: 10px 10px 5px #888888;">
+			<div id="main_public" style="width: 100%;height:350px;"></div>
+        </div>
+		
+        <div class="col-md-6">
+			<div id="main_cpu_men_disk" style="width: 100%;height:380px;"></div>
+        </div>
+		
+        <!--<div class="col-md-3" style="box-shadow: 10px 10px 5px #888888;">
+			<div id="main_public_1" style="width: 100%;height:350px;"></div>
+        </div>-->
+    </div>
+	
+    <!--<div class="row">
+        <div class="col-md-3" style="box-shadow: 10px 10px 5px #888888;">
+			<div id="main_globel" style="width: 100%;height:350px;"></div>
+        </div>
+        <div class="col-md-6" style="box-shadow: 10px 10px 5px #888888;">
+			<div id="main_middle" style="width: 100%;height:350px;"></div>
+        </div>
+        <div class="col-md-3" style="box-shadow: 10px 10px 5px #888888;">
+			<div id="main_globel_1" style="width: 100%;height:350px;"></div>
+        </div>
+    </div>-->
+</section>
+
+<!-- 加载图表显示 -->
+<script src="/static/plugins/echarts/echarts.min.js"></script>
+<!-- 表格插件  -->
+<script src="/static/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript"></script>
+<script src="/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript"></script>
+<script src="/static/plugins/bootstrap-table/cookie/bootstrap-table-cookie.js"></script>
+<link rel="stylesheet" href="/static/plugins/bootstrap-table/bootstrap-table.min.css">
+<script>
+
+
+        // 基于准备好的dom，初始化实例
+		
+		//zxbk_cpu_men_disk_chart 开始---------------------
+        var zxbk_cpu_men_disk_chart = echarts.init(document.getElementById('main_cpu_men_disk'));
+		//显示加载缓冲
+		//zxbk_cpu_men_disk_chart.showLoading();
+        // 指定图表的配置项和数据
+		var zxbk_cpu_men_disk_chart_option = {
+			tooltip : {
+				formatter: "{a} <br/>{c} {b}"
+			},
+			/*toolbox: {
+				show: true,
+				feature: {
+					restore: {show: true},
+					saveAsImage: {show: true}
+				}
+			},*/
+			series : [
+				{
+					name: 'CPU',
+					type: 'gauge',
+					z: 3,
+					min: 0,
+					max: 100,
+					splitNumber: 10,
+					radius: '80%',
+					axisLine: {            // 坐标轴线
+						lineStyle: {       // 属性lineStyle控制线条样式
+							width: 10
+						}
+					},
+					axisTick: {            // 坐标轴小标记
+						length: 15,        // 属性length控制线长
+						lineStyle: {       // 属性lineStyle控制线条样式
+							color: 'auto'
+						}
+					},
+					splitLine: {           // 分隔线
+						length: 20,         // 属性length控制线长
+						lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+							color: 'auto'
+						}
+					},
+					axisLabel: {
+						backgroundColor: 'auto',
+						borderRadius: 2,
+						color: '#eee',
+						padding: 3,
+						textShadowBlur: 2,
+						textShadowOffsetX: 1,
+						textShadowOffsetY: 1,
+						textShadowColor: '#222'
+					},
+					title : {
+						// 其余属性默认使用全局文本样式，详见TEXTSTYLE
+						fontWeight: 'bolder',
+						fontSize: 20,
+						fontStyle: 'italic'
+					},
+					detail : {
+						// 其余属性默认使用全局文本样式，详见TEXTSTYLE
+						formatter: function (value) {
+							value = (value + '').split('.');
+							value.length < 2 && (value.push('00'));
+							return ('00' + value[0]).slice(-2)
+								+ '.' + (value[1] + '00').slice(0, 2);
+						},
+						fontWeight: 'bolder',
+						borderRadius: 3,
+						backgroundColor: '#444',
+						borderColor: '#aaa',
+						shadowBlur: 5,
+						shadowColor: '#333',
+						shadowOffsetX: 0,
+						shadowOffsetY: 3,
+						borderWidth: 2,
+						textBorderColor: '#000',
+						textBorderWidth: 2,
+						textShadowBlur: 2,
+						textShadowColor: '#fff',
+						textShadowOffsetX: 0,
+						textShadowOffsetY: 0,
+						fontFamily: 'Arial',
+						width: 100,
+						color: '#eee',
+						rich: {}
+					},
+					data:[{value: 100, name: 'CPU %'}]
+				},
+				{
+					name: '内存',
+					type: 'gauge',
+					center: ['20%', '55%'],    // 默认全局居中
+					radius: '50%',
+					min:0,
+					max:100,
+					endAngle:45,
+					splitNumber:10,
+					axisLine: {            // 坐标轴线
+						lineStyle: {       // 属性lineStyle控制线条样式
+							width: 8
+						}
+					},
+					axisTick: {            // 坐标轴小标记
+						length:12,        // 属性length控制线长
+						lineStyle: {       // 属性lineStyle控制线条样式
+							color: 'auto'
+						}
+					},
+					splitLine: {           // 分隔线
+						length:20,         // 属性length控制线长
+						lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+							color: 'auto'
+						}
+					},
+					pointer: {
+						width:5
+					},
+					title: {
+						offsetCenter: [0, '-30%'],       // x, y，单位px
+					},
+					detail: {
+						// 其余属性默认使用全局文本样式，详见TEXTSTYLE
+						fontWeight: 'bolder'
+					},
+					data:[{value: 100, name: 'MEM %'}]
+				},
+				{
+					name: '磁盘',
+					type: 'gauge',
+					center: ['83%', '55%'],    // 默认全局居中
+					radius: '50%',
+					startAngle:145,
+					min:0,
+					max:100,
+
+					splitNumber:10,
+					axisLine: {            // 坐标轴线
+						lineStyle: {       // 属性lineStyle控制线条样式
+							width: 8
+						}
+					},
+					axisTick: {            // 坐标轴小标记
+						length:12,        // 属性length控制线长
+						lineStyle: {       // 属性lineStyle控制线条样式
+							color: 'auto'
+						}
+					},
+					splitLine: {           // 分隔线
+						length:20,         // 属性length控制线长
+						lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+							color: 'auto'
+						}
+					},
+					pointer: {
+						width:5
+					},
+					title: {
+						offsetCenter: [0, '-30%'],       // x, y，单位px
+					},
+					detail: {
+						// 其余属性默认使用全局文本样式，详见TEXTSTYLE
+						fontWeight: 'bolder'
+					},
+					data:[{value: 100, name: 'DISK %'}]
+				}
+			]
+		};
+
+		//虚拟数据部分
+		setInterval(function (){
+			zxbk_cpu_men_disk_chart_option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+			zxbk_cpu_men_disk_chart_option.series[1].data[0].value = (Math.random()*100).toFixed(2) - 0;
+			zxbk_cpu_men_disk_chart_option.series[2].data[0].value = 7+(Math.random()*1).toFixed(2) - 0;
+			// 使用刚指定的配置项和数据显示图表。
+			zxbk_cpu_men_disk_chart.setOption(zxbk_cpu_men_disk_chart_option,true);
+		},2000);
+        //zxbk_cpu_men_disk_chart 结束---------------------
+
+		
+		//main_public 开始---------------------
+		var main_public = echarts.init(document.getElementById('main_public'));
+		var main_public_1 = echarts.init(document.getElementById('main_public_1'));
+		
+		main_public_option = {
+			title : {
+				//text: '应用运行状态',
+				subtext: '应用运行状态',
+				x:'center'
+			},
+			tooltip : {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left',
+				data: ['在线','离线','正常','错误','运行']
+			},
+			series : [
+				{
+					name: '访问来源',
+					type: 'pie',
+					radius : '55%',
+					center: ['50%', '60%'],
+					data:[
+						{value:335, name:'在线'},
+						{value:310, name:'离线'},
+						{value:234, name:'正常'},
+						{value:135, name:'错误'},
+						{value:1548, name:'运行'}
+					],
+					itemStyle: {
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}
+			]
+		};
+		
+		main_public.setOption(main_public_option);
+		main_public_1.setOption(main_public_option);
+		//main_public 结束---------------------
+		
+		//main_globel 开始---------------------
+		var main_globel = echarts.init(document.getElementById('main_globel'));
+		var main_globel_1 = echarts.init(document.getElementById('main_globel_1'));
+		
+		main_globel_option = {
+			title: {
+				//text: '动态数据',
+				subtext: '测试实时数据'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'cross',
+					label: {
+						backgroundColor: '#283b56'
+					}
+				}
+			},
+			legend: {
+				data:['最新成交价', '预购队列']
+			},
+			/*toolbox: {
+				show: true,
+				feature: {
+					dataView: {readOnly: false},
+					restore: {},
+					saveAsImage: {}
+				}
+			},*/
+			dataZoom: {
+				show: false,
+				start: 0,
+				end: 100
+			},
+			xAxis: [
+				{
+					type: 'category',
+					boundaryGap: true,
+					data: (function (){
+						var now = new Date();
+						var res = [];
+						var len = 10;
+						while (len--) {
+							res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+							now = new Date(now - 2000);
+						}
+						return res;
+					})()
+				},
+				{
+					type: 'category',
+					boundaryGap: true,
+					data: (function (){
+						var res = [];
+						var len = 10;
+						while (len--) {
+							res.push(10 - len - 1);
+						}
+						return res;
+					})()
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					scale: true,
+					//name: '价格',
+					max: 30,
+					min: 0,
+					boundaryGap: [0.2, 0.2]
+				},
+				{
+					type: 'value',
+					scale: true,
+					//name: '预购量',
+					max: 1200,
+					min: 0,
+					boundaryGap: [0.2, 0.2]
+				}
+			],
+			series: [
+				{
+					name:'预购队列',
+					type:'bar',
+					xAxisIndex: 1,
+					yAxisIndex: 1,
+					data:(function (){
+						var res = [];
+						var len = 10;
+						while (len--) {
+							res.push(Math.round(Math.random() * 1000));
+						}
+						return res;
+					})()
+				},
+				{
+					name:'最新成交价',
+					type:'line',
+					data:(function (){
+						var res = [];
+						var len = 0;
+						while (len < 10) {
+							res.push((Math.random()*10 + 5).toFixed(1) - 0);
+							len++;
+						}
+						return res;
+					})()
+				}
+			]
+		};
+
+		count = 11;
+		setInterval(function (){
+			axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+			var data0 = main_globel_option.series[0].data;
+			var data1 = main_globel_option.series[1].data;
+			data0.shift();
+			data0.push(Math.round(Math.random() * 1000));
+			data1.shift();
+			data1.push((Math.random() * 10 + 5).toFixed(1) - 0);
+
+			main_globel_option.xAxis[0].data.shift();
+			main_globel_option.xAxis[0].data.push(axisData);
+			main_globel_option.xAxis[1].data.shift();
+			main_globel_option.xAxis[1].data.push(count++);
+
+			main_globel.setOption(main_globel_option);
+			main_globel_1.setOption(main_globel_option);
+		}, 2100);
+
+		//main_globel 结束---------------------
+		
+		
+		//main_middle 开始---------------------
+		var main_middle = echarts.init(document.getElementById('main_middle'));
+		main_middle_option = {
+			title: {
+				//text: '堆叠区域图'
+				subtext: '测试数据'
+			},
+			tooltip : {
+				trigger: 'axis',
+				axisPointer: {
+					type: 'cross',
+					label: {
+						backgroundColor: '#6a7985'
+					}
+				}
+			},
+			legend: {
+				data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+			},
+			/*toolbox: {
+				feature: {
+					saveAsImage: {}
+				}
+			},*/
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : ['周一','周二','周三','周四','周五','周六','周日']
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					name:'邮件营销',
+					type:'line',
+					stack: '总量',
+					areaStyle: {normal: {}},
+					data:[120, 132, 101, 134, 90, 230, 210]
+				},
+				{
+					name:'联盟广告',
+					type:'line',
+					stack: '总量',
+					areaStyle: {normal: {}},
+					data:[220, 182, 191, 234, 290, 330, 310]
+				},
+				{
+					name:'视频广告',
+					type:'line',
+					stack: '总量',
+					areaStyle: {normal: {}},
+					data:[150, 232, 201, 154, 190, 330, 410]
+				},
+				{
+					name:'直接访问',
+					type:'line',
+					stack: '总量',
+					areaStyle: {normal: {}},
+					data:[320, 332, 301, 334, 390, 330, 320]
+				},
+				{
+					name:'搜索引擎',
+					type:'line',
+					stack: '总量',
+					label: {
+						normal: {
+							show: true,
+							position: 'top'
+						}
+					},
+					areaStyle: {normal: {}},
+					data:[820, 932, 901, 934, 1290, 1330, 1320]
+				}
+			]
+		};
+
+		main_middle.setOption(main_middle_option);
+		//main_middle 结束---------------------
+		
+		
+</script>
+<!-- 加载图表显示结束 -->
+	
+
+    <!-- 页面内容结束 -->
+</section>
+<!-- /.content -->

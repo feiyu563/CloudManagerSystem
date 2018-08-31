@@ -1,0 +1,134 @@
+<!-- select2启用插件 -->
+<script src="/static/plugins/select2/select2.full.min.js"></script>
+
+
+<script>
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    var NamespaceData= [];
+    var ClusterData= [];
+	var ClusterId='';
+	var NamespaceIdDatajson=[];
+	$(function () {	
+		Clusterdatainit();
+    })
+	
+	function Clusterdatainit(){
+		//初始化Cluster选择
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserClusterController.Get"}}',
+			async: false,
+			type: "get",
+			data: {},
+			success: function (data, status) {
+				$.each(data.rows, function (key, value) {
+					if(value.Selected=="0"){
+						ClusterData.push({ id: value.Id, text: value.Name });
+					}else{
+						ClusterData.push({ id: value.Id, text: value.Name, selected:true });
+						//初始化ClusterId
+						ClusterId=value.Id;
+					}
+				});
+			},
+		});
+		//判断是否用户第一次进入环境设置
+		if(ClusterId==''){
+			ClusterData.push({ id: 0, text: '请选择集群', selected:true });
+		}
+		//生成数据
+		$('#ClusterSelect').select2({
+			data: ClusterData
+		});
+		Namespacedatainit(); 
+	}
+	
+	
+	//$('#mySelect2').val(null).trigger('change');
+	
+	function Namespacedatainit(){
+		//初始化NamespceSelect
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Get"}}',
+			async: false,
+			type: "get",
+			data: {clusterId:ClusterId},
+			success: function (data, status) {
+				$.each(data.rows, function (key, value) {
+					if(value.Selected=="0"){
+					NamespaceData[key]={ id: value.Id, text: value.Name };
+					}else{
+					NamespaceData[key]={ id: value.Id, text: value.Name, selected:true };
+					}
+				});
+				return {results: NamespaceData};
+			},
+		});
+		//生成数据
+		$('#NamespceSelect').select2({
+			data: NamespaceData
+		})
+	
+	}
+	
+	//重新选择集群后,清空NamespceSelect,并重新获取新的内容
+	$('#ClusterSelect').on('select2:select', function (e) { 
+		ClusterId=$('#ClusterSelect').val();
+		$('#NamespceSelect').val(null).trigger('change');
+		NamespaceData=[];
+		$('#NamespceSelect').select2({data: NamespaceData});
+		$('#NamespceSelect').select2({
+		  ajax: {
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Get"}}',
+			data: {clusterId:ClusterId},
+			processResults: function (data) {
+				$.each(data.rows, function (key, value) {
+					NamespaceData[key]={ id: value.Id, text: value.Name };
+				});
+			  return {results: NamespaceData};
+			}
+		  }
+		});
+	});
+
+	
+	//提交信息
+	$('#btnSubmit').click(function () { 
+		//保存集群
+		var jsonstr={
+			ClusterId: ClusterId,
+		};
+		var json_data = JSON.stringify(jsonstr);
+		
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserClusterController.Post"}}',
+			async: false,
+			type: "post",
+			data: json_data,
+			success: function (data, status) {
+				//console.log(data);
+			},
+		});
+		var NamespaceIdData=$('#NamespceSelect').val();
+		//生成列表NamespaceId
+		NamespaceIdDatajson=[];
+		$.each(NamespaceIdData, function (key, value) {
+			NamespaceIdDatajson[key]={NamespaceId: value}
+		});
+		jsonstr={
+			ClusterId: ClusterId,
+			Eunsm: NamespaceIdDatajson
+		};
+		json_data = JSON.stringify(jsonstr);
+		//保存命名空间
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Post"}}',
+			async: false,
+			type: "post",
+			data: json_data,
+			success: function (data, status) {
+				alert("保存成功!");
+			},
+		});
+	})
+	
+</script>

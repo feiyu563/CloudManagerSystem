@@ -1,0 +1,19 @@
+<form id="thisFormCluster">
+    <input type="hidden" name="Id" id="Id" value="{{or .m.Id ""}}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>集群名称</label>
+                <input type="text" name="Name" id="Name" class="form-control" placeholder="K8S" value="{{or .m.Name ""}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>备注</label>
+                <textarea name="Remark" class="form-control" placeholder="">{{or .m.Remark ""}}</textarea>
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>

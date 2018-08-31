@@ -1,0 +1,63 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        基础环境管理
+        <small>HOST管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{urlfor "BaseclusterController.Hosts"}}">
+                <i class="fa fa-dashboard"></i> 基础环境管理</a>
+        </li>
+        <li class="active">HOST管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- 页面内容开始 -->
+    <div class="row">
+        <div class="col-md-12">           
+            <form id="searchForm" class="searchForm">
+                <div class="box box-solid collapsed-box">
+                    <div class="box-header with-border">
+					<div class="col-md-6"> 
+					<div class="btn-group">
+						<button class="btn btn-primary">I P :</button>
+                        <input type="text" name="Ip" id="ipaddr" class="form-control pull-left input-wd-md" placeholder="192.168.1.1">
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-primary">角  色 :</button>
+						<select id="role" class="form-control pull-left input-wd-md">
+						  <option value="0">master</option>
+						  <option value="1">node</option>
+						</select>
+					</div>
+					</div>
+						<div class="col-md-2"> 
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning" id="btnSearch"><i class="fa fa-search"></i> 查询</button>
+                            <button type="button" class="btn btn-default" id="btnClearSearch"><i class="fa fa-eraser"></i> 清除</button>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <!-- /.searchForm -->
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="btn-group" id="toolbar">
+                        <button class="btn btn-info" href="javascript:;" onclick="EditFun(0)">
+                            <i class="fa fa-plus"></i> 添加</button>                              
+                        <button class="btn btn-danger table-btn-check-enable" disabled onclick="DeleteFun()">
+                            <i class="fa fa-trash"></i> 删除
+                        </button>
+                    </div>
+                    <table id="dataGridHost"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 页面内容结束 -->
+</section>
+<!-- /.content -->

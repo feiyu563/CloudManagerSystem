@@ -1,0 +1,70 @@
+<script>
+
+	$('#ClusterSelect').on('changed.bs.select',function(e){
+		ClusterId=$('#ClusterSelect').val();
+		//重新选择集群后,清空NamespceSelect,并重新获取新的内容
+		$.each(namespace_id, function (key, value) {
+			$('#NamespceSelect').find('[value='+value.Id+']').remove();
+		});
+		//刷新页面显示
+		$('#NamespceSelect').selectpicker('refresh');
+		
+		//初始化NamespceSelect
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Get"}}',
+			async: false,
+			type: "get",
+			data: {clusterId:ClusterId},
+			success: function (data, status) {
+				namespace_id=data.rows;
+				$.each(namespace_id, function (key, value) {
+					$('#NamespceSelect.selectpicker').append("<option value=" + value.Id + ">" +  value.Name + "</option>");
+				});
+		　　$('#NamespceSelect').selectpicker('refresh');
+			},
+		});
+	
+	});
+
+	//提交信息
+	$('#btnSubmit').click(function () { 
+		//保存集群
+		var jsonstr={
+			ClusterId: ClusterId,
+		};
+		var json_data = JSON.stringify(jsonstr);
+		
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserClusterController.Post"}}',
+			async: false,
+			type: "post",
+			data: json_data,
+			success: function (data, status) {
+				alert("保存成功!");
+			},
+		});
+		
+		/*var NamespaceIdData=$('#NamespceSelect').val();
+		//生成列表NamespaceId
+		NamespaceIdDatajson=[];
+		$.each(NamespaceIdData, function (key, value) {
+			NamespaceIdDatajson[key]={NamespaceId: value}
+		});
+		jsonstr={
+			ClusterId: ClusterId,
+			Eunsm: NamespaceIdDatajson
+		};
+		json_data = JSON.stringify(jsonstr);
+		//保存命名空间
+		$.ajax({
+			url: '{{ urlfor "KubeEnvUserNamespaceController.Post"}}',
+			async: false,
+			type: "post",
+			data: json_data,
+			success: function (data, status) {
+				alert("保存成功!");
+			},
+		});*/
+	})
+	
+</script>
